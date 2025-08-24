@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioMind Gran Mestre | Seu Segundo Cérebro</title>
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+</head>
+<body>
+
+    <div id="app-background"></div>
+
+    <header class="main-header">
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fa-solid fa-brain"></i>
+                <h1>BiblioMind</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn btn-icon" id="export-btn" title="Exportar Dados"><i class="fa-solid fa-file-arrow-down"></i></button>
+                <button class="btn btn-icon" id="import-btn" title="Importar Dados"><i class="fa-solid fa-file-arrow-up"></i></button>
+                <input type="file" id="import-file" accept=".json" style="display: none;">
+                <div class="theme-switcher">
+                    <i class="fa-solid fa-sun"></i>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle">
+                        <span class="slider round"></span>
+                    </label>
+                    <i class="fa-solid fa-moon"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container main-content">
+        <section class="form-section glass-card">
+            <h2 id="form-title"><i class="fa-solid fa-feather-pointed"></i> Novo Resumo</h2>
+            <form id="form-resumo">
+                <input type="hidden" id="summary-id">
+                
+                <div class="form-group">
+                    <label for="fonte">Fonte</label>
+                    <input type="text" id="fonte" name="fonte" placeholder="Título, Capítulo, Autor" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="tags-input">Tags (pressione Enter para adicionar)</label>
+                    <div class="tags-container">
+                        <ul id="tags-list"></ul>
+                        <input type="text" id="tags-input" placeholder="Ex: ficção, produtividade...">
+                    </div>
+                </div>
+
+                <div class="form-group rich-text-group">
+                    <label>Ideia Central</label>
+                    <div class="editor-toolbar">
+                        <button type="button" data-command="bold"><i class="fas fa-bold"></i></button>
+                        <button type="button" data-command="italic"><i class="fas fa-italic"></i></button>
+                        <button type="button" data-command="underline"><i class="fas fa-underline"></i></button>
+                        <button type="button" data-command="insertUnorderedList"><i class="fas fa-list-ul"></i></button>
+                    </div>
+                    <div id="ideia-central" class="rich-text-editor" contenteditable="true" data-placeholder="Digite aqui..."></div>
+                </div>
+                
+                <div class="form-group rich-text-group">
+                    <label>Argumentos, Dúvidas e Anotações</label>
+                     <div class="editor-toolbar">
+                        <button type="button" data-command="bold"><i class="fas fa-bold"></i></button>
+                        <button type="button" data-command="italic"><i class="fas fa-italic"></i></button>
+                        <button type="button" data-command="underline"><i class="fas fa-underline"></i></button>
+                        <button type="button" data-command="insertUnorderedList"><i class="fas fa-list-ul"></i></button>
+                    </div>
+                    <div id="annotations" class="rich-text-editor" contenteditable="true" data-placeholder="Use este espaço para argumentos, vocabulário, críticas..."></div>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-save"></i> Salvar</button>
+                    <button type="button" class="btn btn-secondary" id="clear-btn"><i class="fa-solid fa-eraser"></i> Limpar</button>
+                </div>
+            </form>
+        </section>
+
+        <section class="summaries-section">
+            <div class="summaries-header">
+                <h2><i class="fa-solid fa-book-open"></i> Meus Resumos</h2>
+                <div class="controls-wrapper">
+                    <div class="search-wrapper">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="search" id="search-bar" placeholder="Buscar...">
+                    </div>
+                    <select id="sort-by">
+                        <option value="newest">Mais Recentes</option>
+                        <option value="oldest">Mais Antigos</option>
+                        <option value="az">Título (A-Z)</option>
+                    </select>
+                </div>
+            </div>
+            <div id="summaries-grid"></div>
+        </section>
+    </main>
+
+    <div id="view-modal" class="modal-overlay">
+        <div class="modal-content glass-card">
+            <button id="modal-close" class="modal-close-btn"><i class="fas fa-times"></i></button>
+            <h2 id="modal-title"></h2>
+            <div id="modal-tags" class="modal-tags-container"></div>
+            <div class="modal-body">
+                <h3>Ideia Central</h3>
+                <div id="modal-ideia-central"></div>
+                <h3>Anotações Completas</h3>
+                <div id="modal-annotations"></div>
+            </div>
+            <div class="modal-footer">
+                <p id="modal-timestamp"></p>
+                <button id="modal-edit-btn" class="btn btn-primary"><i class="fas fa-edit"></i> Editar Resumo</button>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
